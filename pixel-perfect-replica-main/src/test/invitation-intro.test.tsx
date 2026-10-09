@@ -36,7 +36,7 @@ describe("Invitation opening", () => {
     expect(onOpen).toHaveBeenCalledTimes(1);
   });
 
-  it("shows a brief opening before continuing with reduced motion", () => {
+  it("keeps the full opening duration with reduced motion", () => {
     vi.useFakeTimers();
     vi.mocked(useReducedMotion).mockReturnValue(true);
     const onOpen = vi.fn();
@@ -47,7 +47,9 @@ describe("Invitation opening", () => {
     expect(
       screen.getByRole("region", { name: "Welcome to the safari invitation" }),
     ).toHaveAttribute("data-opening", "true");
-    act(() => vi.advanceTimersByTime(649));
+    act(() => vi.advanceTimersByTime(650));
+    expect(onOpen).not.toHaveBeenCalled();
+    act(() => vi.advanceTimersByTime(1949));
     expect(onOpen).not.toHaveBeenCalled();
     act(() => vi.advanceTimersByTime(1));
     expect(onOpen).toHaveBeenCalledTimes(1);

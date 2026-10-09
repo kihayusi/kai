@@ -25,8 +25,8 @@ export function InvitationIntro({ onOpen }: { onOpen: () => void }) {
     started.current = true;
     setOpening(true);
     if (skip) onOpen();
-    // Reduced motion keeps a brief opacity-only opening instead of skipping it.
-    else timer.current = setTimeout(onOpen, reduce ? 650 : 2600);
+    // Reduced motion changes the effects, not the time guests have to see the invitation.
+    else timer.current = setTimeout(onOpen, 2600);
   }
 
   return (
@@ -41,7 +41,7 @@ export function InvitationIntro({ onOpen }: { onOpen: () => void }) {
       <motion.div
         className="intro-copy"
         animate={{ opacity: opening ? 0 : 1, y: opening && !reduce ? -15 : 0 }}
-        transition={{ duration: reduce ? 0.3 : 0.45, delay: opening ? (reduce ? 0.35 : 2.15) : 0 }}
+        transition={{ duration: 0.45, delay: opening ? 2.15 : 0 }}
       >
         <Compass className="intro-compass" size={38} strokeWidth={1} aria-hidden="true" />
         <p className="safari-eyebrow">A very special adventure awaits</p>
@@ -76,7 +76,7 @@ export function InvitationIntro({ onOpen }: { onOpen: () => void }) {
             className="envelope-flap"
             aria-hidden="true"
             animate={{ rotateX: opening && !reduce ? 180 : 0, opacity: opening && reduce ? 0 : 1 }}
-            transition={{ duration: reduce ? 0.2 : 0.9, delay: reduce ? 0.15 : 0.3 }}
+            transition={{ duration: 0.9, delay: 0.3 }}
           />
           <span className="envelope-seal-position" aria-hidden="true">
             <motion.span
@@ -86,7 +86,7 @@ export function InvitationIntro({ onOpen }: { onOpen: () => void }) {
                 rotate: opening && !reduce ? -15 : 0,
                 opacity: opening ? 0 : 1,
               }}
-              transition={{ duration: reduce ? 0.2 : 0.4 }}
+              transition={{ duration: 0.4 }}
             >
               {invitation.childName[0]}
             </motion.span>
