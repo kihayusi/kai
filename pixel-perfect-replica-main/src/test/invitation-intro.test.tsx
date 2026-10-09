@@ -22,7 +22,7 @@ describe("Invitation opening", () => {
     const start = screen.getByRole("button", { name: "Open the invitation" });
     fireEvent.click(start);
     fireEvent.click(start);
-    act(() => vi.advanceTimersByTime(999));
+    act(() => vi.advanceTimersByTime(2599));
     expect(onOpen).not.toHaveBeenCalled();
     act(() => vi.advanceTimersByTime(1));
     expect(onOpen).toHaveBeenCalledTimes(1);
@@ -44,10 +44,9 @@ describe("Invitation opening", () => {
     const start = screen.getByRole("button", { name: "Open the invitation" });
     fireEvent.click(start);
     expect(start).toBeDisabled();
-    expect(screen.getByRole("region", { name: "Welcome to the safari invitation" })).toHaveAttribute(
-      "data-opening",
-      "true",
-    );
+    expect(
+      screen.getByRole("region", { name: "Welcome to the safari invitation" }),
+    ).toHaveAttribute("data-opening", "true");
     act(() => vi.advanceTimersByTime(649));
     expect(onOpen).not.toHaveBeenCalled();
     act(() => vi.advanceTimersByTime(1));
@@ -63,7 +62,7 @@ describe("Invitation opening", () => {
     expect(document.body.style.overflow).toBe("hidden");
     fireEvent.click(screen.getByRole("button", { name: "Open the invitation" }));
     unmount();
-    act(() => vi.advanceTimersByTime(1600));
+    act(() => vi.advanceTimersByTime(3000));
     expect(onOpen).not.toHaveBeenCalled();
     expect(document.body.style.overflow).toBe("auto");
     document.body.style.overflow = "";

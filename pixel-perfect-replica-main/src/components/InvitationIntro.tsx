@@ -26,7 +26,7 @@ export function InvitationIntro({ onOpen }: { onOpen: () => void }) {
     setOpening(true);
     if (skip) onOpen();
     // Reduced motion keeps a brief opacity-only opening instead of skipping it.
-    else timer.current = setTimeout(onOpen, reduce ? 650 : 1000);
+    else timer.current = setTimeout(onOpen, reduce ? 650 : 2600);
   }
 
   return (
@@ -41,7 +41,7 @@ export function InvitationIntro({ onOpen }: { onOpen: () => void }) {
       <motion.div
         className="intro-copy"
         animate={{ opacity: opening ? 0 : 1, y: opening && !reduce ? -15 : 0 }}
-        transition={{ duration: 0.3, delay: opening ? (reduce ? 0.35 : 0.7) : 0 }}
+        transition={{ duration: reduce ? 0.3 : 0.45, delay: opening ? (reduce ? 0.35 : 2.15) : 0 }}
       >
         <Compass className="intro-compass" size={38} strokeWidth={1} aria-hidden="true" />
         <p className="safari-eyebrow">A very special adventure awaits</p>
@@ -65,7 +65,7 @@ export function InvitationIntro({ onOpen }: { onOpen: () => void }) {
             className="envelope-letter"
             aria-hidden="true"
             animate={{ y: opening && !reduce ? "-38%" : 0 }}
-            transition={{ duration: reduce ? 0 : 0.45, delay: 0.3 }}
+            transition={{ duration: reduce ? 0 : 0.75, delay: reduce ? 0 : 1 }}
           >
             <span>You’re invited</span>
             <small>{invitation.dateLabel}</small>
@@ -76,7 +76,7 @@ export function InvitationIntro({ onOpen }: { onOpen: () => void }) {
             className="envelope-flap"
             aria-hidden="true"
             animate={{ rotateX: opening && !reduce ? 180 : 0, opacity: opening && reduce ? 0 : 1 }}
-            transition={{ duration: reduce ? 0.2 : 0.5, delay: 0.15 }}
+            transition={{ duration: reduce ? 0.2 : 0.9, delay: reduce ? 0.15 : 0.3 }}
           />
           <span className="envelope-seal-position" aria-hidden="true">
             <motion.span
@@ -86,7 +86,7 @@ export function InvitationIntro({ onOpen }: { onOpen: () => void }) {
                 rotate: opening && !reduce ? -15 : 0,
                 opacity: opening ? 0 : 1,
               }}
-              transition={{ duration: 0.2 }}
+              transition={{ duration: reduce ? 0.2 : 0.4 }}
             >
               {invitation.childName[0]}
             </motion.span>
@@ -107,7 +107,11 @@ export function InvitationIntro({ onOpen }: { onOpen: () => void }) {
               ? { x: side === "left" ? "-105%" : "105%", rotate: side === "left" ? -12 : 12 }
               : { x: 0, rotate: 0 }
           }
-          transition={{ duration: reduce ? 0 : 1.1, ease: [0.22, 1, 0.36, 1] }}
+          transition={{
+            duration: reduce ? 0 : 1.1,
+            delay: opening && !reduce ? 1.5 : 0,
+            ease: [0.22, 1, 0.36, 1],
+          }}
         >
           <img src={foliage} alt="" />
           <img src={foliage} alt="" />
