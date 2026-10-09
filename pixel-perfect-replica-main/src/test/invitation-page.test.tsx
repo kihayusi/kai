@@ -24,13 +24,13 @@ afterEach(() => {
 });
 
 describe("Storybook invitation", () => {
-  it("keeps the existing directions, contact link, and twelve memories", () => {
+  it("keeps directions and memories without the RSVP button", () => {
     render(<InvitationPage />);
     expect(screen.getByRole("link", { name: "Get directions" })).toHaveAttribute("href", mapsUrl);
     expect(
-      screen.getByRole("link", { name: `RSVP to ${invitation.contact.name}` }),
-    ).toHaveAttribute("href", `tel:${invitation.contact.phone.replace(/[^+\d]/g, "")}`);
-    expect(screen.getAllByRole("button", { name: /View Angelo’s month \d+ photo/ })).toHaveLength(
+      screen.queryByRole("link", { name: `RSVP to ${invitation.contact.name}` }),
+    ).not.toBeInTheDocument();
+    expect(screen.getAllByRole("button", { name: /View .+’s month \d+ photo/ })).toHaveLength(
       monthlyPhotos.length,
     );
   });

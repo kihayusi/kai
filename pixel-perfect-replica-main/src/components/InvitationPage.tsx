@@ -429,9 +429,6 @@ export function InvitationPage() {
               <em>Stay for the memories.</em>
             </h2>
             <p>{closing.message}</p>
-            <a className="safari-button" href={phoneLink}>
-              RSVP to {invitation.contact.name} <ArrowUpRight size={17} aria-hidden="true" />
-            </a>
             <span className="footer-deadline">Kindly let us know by {invitation.rsvpDeadline}</span>
             <a className="footer-phone" href={phoneLink}>
               {invitation.contact.phone}

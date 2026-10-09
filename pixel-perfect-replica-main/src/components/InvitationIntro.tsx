@@ -24,8 +24,9 @@ export function InvitationIntro({ onOpen }: { onOpen: () => void }) {
     if (started.current) return;
     started.current = true;
     setOpening(true);
-    if (reduce || skip) onOpen();
-    else timer.current = setTimeout(onOpen, 1000);
+    if (skip) onOpen();
+    // Reduced motion keeps a brief opacity-only opening instead of skipping it.
+    else timer.current = setTimeout(onOpen, reduce ? 650 : 1000);
   }
 
   return (
@@ -34,13 +35,13 @@ export function InvitationIntro({ onOpen }: { onOpen: () => void }) {
       aria-label="Welcome to the safari invitation"
       data-opening={opening}
       exit={{ opacity: 0 }}
-      transition={{ duration: reduce ? 0 : 0.3 }}
+      transition={{ duration: 0.3 }}
     >
       <div className="intro-landscape" aria-hidden="true" />
       <motion.div
         className="intro-copy"
         animate={{ opacity: opening ? 0 : 1, y: opening && !reduce ? -15 : 0 }}
-        transition={{ duration: reduce ? 0 : 0.3, delay: opening && !reduce ? 0.7 : 0 }}
+        transition={{ duration: 0.3, delay: opening ? (reduce ? 0.35 : 0.7) : 0 }}
       >
         <Compass className="intro-compass" size={38} strokeWidth={1} aria-hidden="true" />
         <p className="safari-eyebrow">A very special adventure awaits</p>
@@ -74,18 +75,18 @@ export function InvitationIntro({ onOpen }: { onOpen: () => void }) {
           <motion.span
             className="envelope-flap"
             aria-hidden="true"
-            animate={{ rotateX: opening && !reduce ? 180 : 0 }}
-            transition={{ duration: reduce ? 0 : 0.5, delay: 0.15 }}
+            animate={{ rotateX: opening && !reduce ? 180 : 0, opacity: opening && reduce ? 0 : 1 }}
+            transition={{ duration: reduce ? 0.2 : 0.5, delay: 0.15 }}
           />
           <span className="envelope-seal-position" aria-hidden="true">
             <motion.span
               className="envelope-seal seal-wax"
-              animate={
-                opening
-                  ? { scale: 0, rotate: -15, opacity: 0 }
-                  : { scale: 1, rotate: 0, opacity: 1 }
-              }
-              transition={{ duration: reduce ? 0 : 0.2 }}
+              animate={{
+                scale: opening && !reduce ? 0 : 1,
+                rotate: opening && !reduce ? -15 : 0,
+                opacity: opening ? 0 : 1,
+              }}
+              transition={{ duration: 0.2 }}
             >
               {invitation.childName[0]}
             </motion.span>
@@ -102,7 +103,7 @@ export function InvitationIntro({ onOpen }: { onOpen: () => void }) {
           className={`intro-curtain intro-curtain--${side}`}
           aria-hidden="true"
           animate={
-            opening
+            opening && !reduce
               ? { x: side === "left" ? "-105%" : "105%", rotate: side === "left" ? -12 : 12 }
               : { x: 0, rotate: 0 }
           }

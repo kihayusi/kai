@@ -22,26 +22,40 @@ describe("Invitation opening", () => {
     const start = screen.getByRole("button", { name: "Open the invitation" });
     fireEvent.click(start);
     fireEvent.click(start);
-    act(() => vi.advanceTimersByTime(1600));
+    act(() => vi.advanceTimersByTime(999));
+    expect(onOpen).not.toHaveBeenCalled();
+    act(() => vi.advanceTimersByTime(1));
     expect(onOpen).toHaveBeenCalledTimes(1);
   });
 
-  it("lets guests skip the opening immediately", () => {
+  it.each([false, true])("lets guests skip immediately with reduced motion %s", (reduce) => {
+    vi.mocked(useReducedMotion).mockReturnValue(reduce);
     const onOpen = vi.fn();
     render(<InvitationIntro onOpen={onOpen} />);
     fireEvent.click(screen.getByRole("button", { name: "Skip to the invitation" }));
     expect(onOpen).toHaveBeenCalledTimes(1);
   });
 
-  it("does not delay guests who prefer reduced motion", () => {
+  it("shows a brief opening before continuing with reduced motion", () => {
+    vi.useFakeTimers();
     vi.mocked(useReducedMotion).mockReturnValue(true);
     const onOpen = vi.fn();
     render(<InvitationIntro onOpen={onOpen} />);
-    fireEvent.click(screen.getByRole("button", { name: "Open the invitation" }));
+    const start = screen.getByRole("button", { name: "Open the invitation" });
+    fireEvent.click(start);
+    expect(start).toBeDisabled();
+    expect(screen.getByRole("region", { name: "Welcome to the safari invitation" })).toHaveAttribute(
+      "data-opening",
+      "true",
+    );
+    act(() => vi.advanceTimersByTime(649));
+    expect(onOpen).not.toHaveBeenCalled();
+    act(() => vi.advanceTimersByTime(1));
     expect(onOpen).toHaveBeenCalledTimes(1);
   });
 
-  it("cleans up a pending opening and restores scrolling on unmount", () => {
+  it.each([false, true])("cleans up a pending opening with reduced motion %s", (reduce) => {
+    vi.mocked(useReducedMotion).mockReturnValue(reduce);
     vi.useFakeTimers();
     document.body.style.overflow = "auto";
     const onOpen = vi.fn();
