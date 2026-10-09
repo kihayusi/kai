@@ -1,0 +1,253 @@
+@import "tailwindcss" source(none);
+@source "../src";
+@import "tw-animate-css";
+@import "./storybook.css";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --radius-2xl: calc(var(--radius) + 8px);
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-paper: var(--paper);
+  --color-forest: var(--forest);
+  --color-olive: var(--olive);
+  --color-bark: var(--bark);
+  --color-wood: var(--wood);
+  --color-wood-dark: var(--wood-dark);
+  --color-gold: var(--gold);
+  --color-seal: var(--seal);
+  --color-stage: var(--stage);
+  --color-savanna: var(--savanna);
+  --color-dust: var(--dust);
+  --color-sunset: var(--sunset);
+  --font-script: "Parisienne", cursive;
+  --font-display: "Cormorant Garamond", serif;
+  --font-sans: "Jost", sans-serif;
+}
+
+:root {
+  --radius: 0.75rem;
+
+  /* ── Core palette ── */
+  --paper: oklch(0.968 0.018 82);
+  --background: oklch(0.958 0.022 82);
+  --foreground: oklch(0.3 0.048 58);
+  --card: oklch(0.975 0.014 82);
+  --card-foreground: oklch(0.3 0.048 58);
+  --popover: oklch(0.975 0.014 82);
+  --popover-foreground: oklch(0.3 0.048 58);
+  --primary: oklch(0.38 0.075 148);
+  --primary-foreground: oklch(0.97 0.018 82);
+  --secondary: oklch(0.92 0.036 82);
+  --secondary-foreground: oklch(0.3 0.048 58);
+  --muted: oklch(0.925 0.028 82);
+  --muted-foreground: oklch(0.5 0.038 63);
+  --accent: oklch(0.64 0.135 52);
+  --accent-foreground: oklch(0.98 0.01 82);
+  --destructive: oklch(0.577 0.245 27.325);
+  --destructive-foreground: oklch(0.98 0 0);
+  --border: oklch(0.83 0.038 78);
+  --input: oklch(0.83 0.038 78);
+  --ring: oklch(0.52 0.09 112);
+
+  /* ── Safari extended palette ── */
+  --forest: oklch(0.36 0.075 148);
+  --olive: oklch(0.53 0.085 112);
+  --bark: oklch(0.41 0.065 53);
+  --wood: oklch(0.54 0.082 58);
+  --wood-dark: oklch(0.37 0.062 48);
+  --gold: oklch(0.72 0.115 78);
+  --seal: oklch(0.44 0.125 33);
+  --stage: oklch(0.28 0.048 148);
+  --savanna: oklch(0.88 0.065 78);
+  --dust: oklch(0.78 0.055 72);
+  --sunset: oklch(0.62 0.14 42);
+
+  /* ── Elevation & motion ── */
+  --shadow-card: 0 20px 52px -18px oklch(0.28 0.06 58 / 0.38);
+  --shadow-soft: 0 8px 26px -10px oklch(0.28 0.06 58 / 0.28);
+  --shadow-glow: 0 0 40px 8px oklch(0.72 0.115 78 / 0.3);
+  --ease-premium: cubic-bezier(0.22, 1, 0.36, 1);
+
+  /* ── Textures & gradients ── */
+  --paper-texture:
+    radial-gradient(ellipse at 18% 8%, oklch(1 0 0 / 0.65), transparent 38%),
+    radial-gradient(ellipse at 82% 92%, oklch(0.86 0.055 78 / 0.55), transparent 44%);
+
+  --savanna-bg: linear-gradient(
+    180deg,
+    oklch(0.7 0.085 72) 0%,
+    oklch(0.8 0.07 78) 30%,
+    oklch(0.88 0.065 82) 60%,
+    oklch(0.86 0.058 80) 100%
+  );
+}
+
+/* ─────────────────────────── Base ─────────────────────────── */
+@layer base {
+  * {
+    border-color: var(--color-border);
+  }
+  html {
+    scroll-behavior: smooth;
+  }
+  body {
+    background: var(--background);
+    color: var(--color-foreground);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+  }
+}
+
+/* ─────────────────────────── Utilities ─────────────────────── */
+@utility paper {
+  background-color: var(--paper);
+  background-image: var(--paper-texture);
+}
+
+@utility shadow-card {
+  box-shadow: var(--shadow-card);
+}
+@utility shadow-soft {
+  box-shadow: var(--shadow-soft);
+}
+@utility shadow-glow {
+  box-shadow: var(--shadow-glow);
+}
+
+@utility eyebrow {
+  font-family: var(--font-sans);
+  text-transform: uppercase;
+  letter-spacing: 0.38em;
+  font-size: 0.68rem;
+  font-weight: 600;
+}
+
+/* Wood plank — richer three-tone gradient */
+@utility wood {
+  background: linear-gradient(
+    160deg,
+    oklch(0.62 0.095 64) 0%,
+    oklch(0.54 0.082 58) 45%,
+    oklch(0.38 0.062 48) 100%
+  );
+  box-shadow:
+    inset 0 2px 0 oklch(1 0 0 / 0.18),
+    inset 0 -2px 4px oklch(0 0 0 / 0.18),
+    var(--shadow-card);
+}
+
+/* Wax seal — deeper, richer red with inner glow */
+@utility seal-wax {
+  background: radial-gradient(
+    circle at 32% 28%,
+    oklch(0.62 0.135 38),
+    var(--seal) 58%,
+    oklch(0.3 0.09 28)
+  );
+  box-shadow:
+    0 6px 20px -4px oklch(0.24 0.09 28 / 0.65),
+    inset 0 -3px 7px oklch(0 0 0 / 0.28),
+    inset 0 2px 4px oklch(1 0 0 / 0.12);
+}
+
+/* Subtle savanna alternating section tint */
+@utility savanna-section {
+  background: linear-gradient(
+    180deg,
+    oklch(0.93 0.036 80 / 0.55) 0%,
+    oklch(0.9 0.044 78 / 0.4) 100%
+  );
+}
+
+/* ─────────────────────────── Animations ──────────────────── */
+@keyframes sway {
+  0%,
+  100% {
+    transform: rotate(-2.2deg) translateY(0px);
+  }
+  50% {
+    transform: rotate(2.2deg) translateY(-4px);
+  }
+}
+@utility animate-sway {
+  animation: sway 7s ease-in-out infinite;
+  transform-origin: top center;
+}
+
+@keyframes shimmer-gold {
+  0% {
+    background-position: -200% center;
+  }
+  100% {
+    background-position: 200% center;
+  }
+}
+@utility animate-shimmer {
+  background: linear-gradient(90deg, var(--gold) 0%, oklch(0.88 0.14 80) 50%, var(--gold) 100%);
+  background-size: 200% auto;
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+  animation: shimmer-gold 3.6s linear infinite;
+}
+
+@keyframes pulse-glow {
+  0%,
+  100% {
+    box-shadow: 0 0 16px 2px oklch(0.72 0.115 78 / 0.32);
+  }
+  50% {
+    box-shadow: 0 0 30px 8px oklch(0.72 0.115 78 / 0.55);
+  }
+}
+@utility animate-pulse-glow {
+  animation: pulse-glow 2.4s ease-in-out infinite;
+}
+
+@keyframes float-up {
+  0%,
+  100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-6px);
+  }
+}
+@utility animate-float {
+  animation: float-up 4s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    transition-duration: 0.001ms !important;
+  }
+  html {
+    scroll-behavior: auto;
+  }
+}
